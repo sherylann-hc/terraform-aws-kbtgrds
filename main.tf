@@ -17,16 +17,16 @@ module "vpc" {
 }
 
 resource "aws_db_subnet_group" "kbtg-demo" {
-  name       = "kbtg-demo"
+  name       = var.db_parameter_subnet_name
   subnet_ids = module.vpc.public_subnets
 
   tags = {
-    Name = "kbtg-demo"
+    Name = var.db_parameter_subnet_name
   }
 }
 
 resource "aws_security_group" "rds" {
-  name   = "kbtg-demo_rds"
+  name   = var.db_securitygroup_name
   vpc_id = module.vpc.vpc_id
 
   ingress {
@@ -49,7 +49,7 @@ resource "aws_security_group" "rds" {
 }
 
 resource "aws_db_parameter_group" "kbtg-demo" {
-  name   = "kbtg-demo"
+  name   = var.db_parameter_subnet_name
   family = "postgres14"
 
   parameter {
